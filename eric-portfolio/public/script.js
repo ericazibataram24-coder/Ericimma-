@@ -1,106 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navMenu = document.getElementById("nav-menu");
+    // 1. HAMBURGER MENU FUNCTIONALITY
+    const mobileMenuBtn = document.getElementById("mobileMenu");
+    const navMenu = document.getElementById("navMenu");
 
-    mobileMenu.addEventListener("click", () => {
-        navMenu.classList.toggle("active");
-    });
-
-    const dropdownTrigger = document.getElementById("dropdown-trigger");
-    const dropdownContent = dropdownTrigger.nextElementSibling;
-
-    dropdownTrigger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdownContent.classList.toggle("show-dropdown");
-    });
-
-    document.addEventListener("click", () => {
-        dropdownContent.classList.remove("show-dropdown");
-    });
-
-    const promoModal = document.getElementById("promo-modal");
-    const closeModal = document.getElementById("close-modal");
-
-    setTimeout(() => {
-        promoModal.style.display = "flex";
-    }, 4000);
-
-    closeModal.addEventListener("click", () => {
-        promoModal.style.display = "none";
-    });
-
-    const bookingModal = document.getElementById("booking-modal");
-    const openBookingBtn = document.getElementById("open-booking");
-    const closeBookingModal = document.getElementById("close-booking-modal");
-
-    openBookingBtn.addEventListener("click", () => {
-        bookingModal.style.display = "flex";
-    });
-
-    closeBookingModal.addEventListener("click", () => {
-        bookingModal.style.display = "none";
-    });
-
-    window.addEventListener("click", (e) => {
-        if (e.target === promoModal) promoModal.style.display = "none";
-        if (e.target === bookingModal) bookingModal.style.display = "none";
-    });
-
-    const subscribeForm = document.getElementById("subscribe-form");
-    const subscribeFeedback = document.getElementById("subscribe-feedback");
-
-    subscribeForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = document.getElementById("subscriber-email").value;
-
-        try {
-            const response = await fetch("/api/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                subscribeFeedback.innerText = "Awesome! Your submission was successful.";
-                subscribeFeedback.style.color = "green";
-                subscribeForm.reset();
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle("active");
+            if (navMenu.classList.contains("active")) {
+                navMenu.style.display = "flex"; 
             } else {
-                subscribeFeedback.innerText = data.error || "Something went wrong.";
-                subscribeFeedback.style.color = "red";
+                navMenu.style.display = "none";
             }
-        } catch (err) {
-            subscribeFeedback.innerText = "Server connection error.";
-            subscribeFeedback.style.color = "red";
-        }
-    });
+        });
 
-    const appointmentForm = document.getElementById("appointment-form");
-    const bookingFeedback = document.getElementById("booking-feedback");
+        // Close menu if clicking anywhere else on the screen
+        document.addEventListener("click", () => {
+            navMenu.classList.remove("active");
+            if (window.innerWidth <= 768) {
+                navMenu.style.display = "none";
+            }
+        });
+    }
 
-    appointmentForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const name = document.getElementById("booking-name").value;
-        const email = document.getElementById("booking-email").value;
-        const details = document.getElementById("booking-details").value;
+    // 2. FETCH AND DISPLAY PUBLISHED POSTS FOR VIEWERS
+    const postsContainer = document.getElementById("posts-container");
 
+    async function fetchPosts() {
+        if (!postsContainer) return;
         try {
-            const response = await fetch("/api/book", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, details })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                bookingFeedback.innerText = "Appointment booked successfully!";
-                bookingFeedback.style.color = "green";
-                appointmentForm.reset();
-            } else {
-                bookingFeedback.innerText = data.error || "Failed to book appointment.";
-                bookingFeedback.style.color = "red";
+            const res = await fetch('/api/posts');
+            const posts = await res.json();
+            
+            if (posts.length === 0) {
+                postsContainer.innerHTML = `<p style="text-align: center; color: #7f8c8d;">No courses or updates posted yet.</p>`;
+                return;
             }
+
+            postsContainer.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    <h3 style="margin-top: 0; color: #2c3e50;">${post.title}</h3>
+                    <p style="font-size: 14px; color: #95a5a6; margin-bottom: 10px;">Published on: ${post.date}</p>
+                    <p style="white-space: pre-wrap; line-height: 1.6; color: #34495e;">${post.content}</p>
+                </div>
+            `).join('');
         } catch (err) {
-            bookingFeedback.innerText = "Server connection error.";
-            bookingFeedback.style.color = "red";
+            console.error("Error fetching posts:", err);
+            postsContainer.innerHTML = `<p style="text-align: center; color: red;">Failed to load updates. Try reloading.</p>`;
         }
-    });
+    }
+
+    fetchPosts();
 });

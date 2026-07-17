@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        label { font-weight: bold; display: block; margin-bottom: 8px; }
+        input, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background: #2980b9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Owner Control Center</h1>
+        
+        <!-- Section to Upload New Content -->
+        <div class="card">
+            <h2>Post a New Course or Announcement</h2>
+            <form id="postForm">
+                <label for="postTitle">Topic / Course Title</label>
+                <input type="text" id="postTitle" placeholder="e.g., Introduction to Microbiology Week 1" required>
+                
+                <label for="postContent">Course Details / Content</label>
+                <textarea id="postContent" rows="6" placeholder="Write the lessons, guides, or updates here..." required></textarea>
+                
+                <button type="submit">Publish to Website</button>
+            </form>
+        </div>
+
+        <div class="grid">
+            <!-- Section to See Bookings -->
+            <div class="card">
+                <h2>Registered Students & Appointments</h2>
+                <table id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="3">No registrations yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section to See Subscribers -->
+            <div class="card">
+                <h2>Newsletter Subscribers</h2>
+                <table id="subscribersTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Joined On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="2">No subscribers yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load existing database registrations
+        async function loadAdminData() {
+            try {
+                const res = await fetch('/api/admin/data');
+                const data = await res.json();
+                
+                // Populate Appointments Table
+                const apptTableBody = document.querySelector('#appointmentsTable tbody');
+                if(data.appointments.length > 0) {
+                    apptTableBody.innerHTML = data.appointments.map(a => `
+                        <tr>
+                            <td><strong>${a.name}</strong></td>
+                            <td>${a.email}</td>
+                            <td>${a.details}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Populate Subscribers Table
+                const subTableBody = document.querySelector('#subscribersTable tbody');
+                if(data.subscribers.length > 0) {
+                    subTableBody.innerHTML = data.subscribers.map(s => `
+                        <tr>
+                            <td>${s.email}</td>
+                            <td>${s.date}</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error("Error loading dashboard data:", err);
+            }
+        }
+
+        // Handle Publishing New Posts
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+
+            try {
+                const res = await fetch('/api/admin/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content })
+                });
+                const result = await res.json();
+                if(result.success) {
+                    alert("Course/Post published successfully!");
+                    document.getElementById('postForm').reset();
+                } else {
+                    alert("Error publishing post: " + result.error);
+                }
+            } catch (err) {
+                alert("Failed to connect to server.");
+            }
+        });
+
+        // Load data on page load
+        loadAdminData();
+        // Auto-refresh data every 10 seconds to catch new signups
+        setInterval(loadAdminData, 10000);
+    </script>
+</body>
+</html>
