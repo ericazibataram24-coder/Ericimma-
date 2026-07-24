@@ -4,8 +4,6 @@ import {
   ArrowRight, 
   Mail, 
   Phone, 
-  Linkedin, 
-  Youtube, 
   Award, 
   CheckCircle, 
   Send
@@ -13,7 +11,7 @@ import {
 
 export default function App() {
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);seState(false);
+  const [loading, setLoading] = useState(false);seState(false);seState(false);
 
   const FORMSPREE_URL = "https://formspree.io/f/mgogndyk";
 
@@ -315,7 +313,6 @@ export default function App() {
               rel="noreferrer" 
               className="hover:text-indigo-400 transition flex items-center space-x-1 text-slate-300"
             >
-              <Linkedin className="w-4 h-4 text-indigo-400" />
               <span>LinkedIn</span>
             </a>
             <a 
@@ -324,7 +321,6 @@ export default function App() {
               rel="noreferrer" 
               className="hover:text-red-400 transition flex items-center space-x-1 text-slate-300"
             >
-              <Youtube className="w-4 h-4 text-red-500" />
               <span>Eric naija gist</span>
             </a>
           </div>
