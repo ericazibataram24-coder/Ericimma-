@@ -155,7 +155,7 @@ export default function App() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Leadership Summits" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800" alt="Leadership Summits" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Executive Leadership</h3>
@@ -165,7 +165,7 @@ export default function App() {
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Strategy Sessions" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800" alt="Strategy Sessions" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Strategic Operations</h3>
@@ -175,7 +175,7 @@ export default function App() {
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Risk Assessment" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800" alt="Risk Assessment" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Risk Assessment</h3>
