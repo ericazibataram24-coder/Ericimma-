@@ -105,7 +105,7 @@ export default function App() {
                 alt="Eric Azibataram Professional Profile" 
                 className="w-full h-full object-cover object-top"
                 onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800";
+                  e.currentTarget.src = "https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm";
                 }}
               />
               <div className="absolute bottom-3 left-3 right-3 bg-slate-950/80 backdrop-blur-md p-3 rounded-lg border border-slate-800 text-xs text-slate-300 flex items-center space-x-2">
@@ -155,7 +155,7 @@ export default function App() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=600" alt="Leadership Summits" className="w-full h-full object-cover" />
+              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Leadership Summits" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Executive Leadership</h3>
@@ -165,7 +165,7 @@ export default function App() {
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="Strategy Sessions" className="w-full h-full object-cover" />
+              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Strategy Sessions" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Strategic Operations</h3>
@@ -175,7 +175,7 @@ export default function App() {
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="h-48 bg-slate-800">
-              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600" alt="Risk Assessment" className="w-full h-full object-cover" />
+              <img src="https://lh3.googleusercontent.com/d/12nJeWZMXQeJjQWEHQ-7KvZfVEHPo3oNm" alt="Risk Assessment" className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
               <h3 className="font-semibold text-white text-sm mb-1">Risk Assessment</h3>
