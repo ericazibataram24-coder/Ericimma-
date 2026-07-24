@@ -13,7 +13,7 @@ import {
 
 export default function App() {
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);seState(false);
 
   const FORMSPREE_URL = "https://formspree.io/f/mgogndyk";
 
